@@ -337,11 +337,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var navController: NavController
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         //Configura el Toolbar
         setSupportActionBar(binding.toolbar)
@@ -349,9 +351,9 @@ class MainActivity : AppCompatActivity() {
         //Inicializa DrawerLayout
         val drawerLayout: DrawerLayout = binding.drawerLayout
 
-        //Habilita el botón de hamburguesa para abrir el drawer
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+        //Habilita el botón de hamburguesa para abrir el drawer de forma manual, si quiero personalizarlo.
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
         //******************* Para iniciar el navController que me permitirá navegar de un fragmento a otro.
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
@@ -361,7 +363,9 @@ class MainActivity : AppCompatActivity() {
         // -- en mi_nav: navigation_fragmento_a
         // -- en menu: navigation_fragmento_a
 
+
         //Define los destinos principales para que siempre muestre el ícono de hamburguesa en lugar de la flecha de retroceso
+        //Configura AppBarConfiguration con tus destinos principales.
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.navigation_opcion1, R.id.navigation_opcion2, R.id.navigation_opcion3),
             drawerLayout
@@ -369,8 +373,10 @@ class MainActivity : AppCompatActivity() {
         //appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout) //--> De esta manera solo se mostraría el ícono de hamburguesa en el Fragmento 1 (principal) y retroceso en el resto.
 
         //Configura AppBarConfiguration para sincronizar el botón de hamburguesa.
+        //Vincula el NavController con el ActionBar
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+        //Como se carga el primer elemento, ponemos el título del primer fragmento.
         supportActionBar?.title = "Opción 1"
 
         //Configura NavigationView
